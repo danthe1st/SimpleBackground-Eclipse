@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="io.github.danthe1st.simple_background_eclipse.preferences.MainPreferencePage"
+            id="io.github.danthe1st.simple_background_eclipse.preferences.MainPreferencePage"
+            name="SimpleBackground">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="io.github.danthe1st.simple_background_eclipse.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="io.github.danthe1st.simple_background_eclipse.SimpleBackgroundStartup">
+      </startup>
+   </extension>
+
+</plugin>

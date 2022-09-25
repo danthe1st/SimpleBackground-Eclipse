@@ -1,0 +1,27 @@
+name: Publish to Update site
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn install -Pcreate-update-site
+    - name: Publish Update Site
+      run: |
+        cd update-site/target/repo
+        curl https://raw.githubusercontent.com/danthe1st/eclipse-update-site/master/LICENSE -o LICENSE
+        curl https://raw.githubusercontent.com/danthe1st/eclipse-update-site/master/NOTICE -o NOTICE
+        git config --global init.defaultBranch master
+        git init
+        git config user.name 'GitHub Actions'
+        git config user.email 'actions@github.com'
+        git add .
+        git commit -m "bump update site"
+        git push -f "https://${{ secrets.UPDATE_SITE_DEPLOY_TOKEN }}@github.com/danthe1st/eclipse-update-site" master

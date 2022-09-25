@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Simple-Background
+Bundle-SymbolicName: io.github.danthe1st.simple-background;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Export-Package: io.github.danthe1st.simple_background_eclipse
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.jface.text
+Bundle-Vendor: dan1st
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: io.github.danthe1st.simple_background
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: io.github.danthe1st.simple_background_eclipse.SimpleBackgroundPlugin
+Bundle-ClassPath: .,
+ target/classes/

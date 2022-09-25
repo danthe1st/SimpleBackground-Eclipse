@@ -15,7 +15,7 @@ jobs:
       run: mvn install -Pcreate-update-site
     - name: Publish Update Site
       run: |
-        cd update-site/target/repo
+        cd simplebackground-update-site/target/repo
         curl https://raw.githubusercontent.com/danthe1st/eclipse-update-site/master/LICENSE -o LICENSE
         curl https://raw.githubusercontent.com/danthe1st/eclipse-update-site/master/NOTICE -o NOTICE
         git config --global init.defaultBranch master

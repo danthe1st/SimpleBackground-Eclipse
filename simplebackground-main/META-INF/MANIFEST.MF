@@ -8,7 +8,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.jface.text
 Bundle-Vendor: dan1st
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Automatic-Module-Name: io.github.danthe1st.simple_background
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: io.github.danthe1st.simple_background_eclipse.SimpleBackgroundPlugin

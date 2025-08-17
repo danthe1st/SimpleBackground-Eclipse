@@ -6,7 +6,6 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>io.github.danthe1st.simple-background</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 	<build>
 		<plugins>
@@ -21,8 +20,13 @@
 					<archive>
 						<addMavenDescriptor>false</addMavenDescriptor>
 					</archive>
-					<log>plain</log>
 				</configuration>
+				<executions>
+					<execution>
+						<id>build-qualifier</id>
+						<?m2e execute onConfiguration?>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

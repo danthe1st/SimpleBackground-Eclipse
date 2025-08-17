@@ -3,5 +3,5 @@
    <feature id="io.github.danthe1st.simple-background.feature">
       <category name="tools_category"/>
    </feature>
-   <category-def name="tools_category" label="tools"/>
+   <category-def name="tools_category" label="Tools"/>
 </site>

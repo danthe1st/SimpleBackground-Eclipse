@@ -2,13 +2,13 @@ package io.github.danthe1st.simple_background_eclipse.preferences;
 
 import java.io.IOException;
 
+import io.github.danthe1st.simple_background_eclipse.SimpleBackgroundPlugin;
+import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-
-import io.github.danthe1st.simple_background_eclipse.SimpleBackgroundPlugin;
 
 /**
  * This class represents a preference page that is contributed to the
@@ -53,11 +53,35 @@ public class MainPreferencePage
 				"&Background image alpha",
 				getFieldEditorParent()
 		);
+		
+		TransparencyMode[] transparencyModes = TransparencyMode.values();
+		String[][] transparencyModeChoices = new String[transparencyModes.length][];
+		for(int i = 0; i < transparencyModes.length; i++){
+			TransparencyMode mode = transparencyModes[i];
+			transparencyModeChoices[i] = new String[] { mode.getModeText(), mode.name() };
+		}
+		
+		ComboFieldEditor transparencyModeEditor = new ComboFieldEditor(
+			PreferenceConstants.TRANSPARENCY_MODE,
+			"&Use transparency for these windows",
+			transparencyModeChoices,
+			getFieldEditorParent()
+		);
+		
+		ComboFieldEditor backgroundImageModeEditor = new ComboFieldEditor(
+			PreferenceConstants.BACKGROUND_IMAGE_TRANSPARENCY_MODE,
+			"&Use background image for these windows",
+			transparencyModeChoices,
+			getFieldEditorParent()
+		);
+			
 		alphaEditor.setValidRange(200, 255);
 		imageAlphaEditor.setValidRange(0, 255);
 		addField(backgroundImageEditor);
 		addField(alphaEditor);
 		addField(imageAlphaEditor);
+		addField(transparencyModeEditor);
+		addField(backgroundImageModeEditor);
 		
 	}
 	

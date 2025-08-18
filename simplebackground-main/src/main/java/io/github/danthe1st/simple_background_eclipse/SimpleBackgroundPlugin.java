@@ -64,7 +64,41 @@ public class SimpleBackgroundPlugin extends Plugin {
 		preferenceStore.setDefault(PreferenceConstants.BACKGROUND_IMAGE_ALPHA, 255);
 		preferenceStore.load();
 		
-		PlatformUI.getWorkbench().getDisplay().asyncExec(this::reloadBackground);
+		PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+			Set<Shell> knownShellHandles = new HashSet<>();
+			PlatformUI.getWorkbench().getDisplay().addFilter(SWT.Activate, e -> {
+				if(e.widget instanceof Shell shell){
+					activateShell(shell);
+					if(knownShellHandles.add(shell)){
+						shell.addControlListener(new ControlListener() {
+							
+							@Override
+							public void controlResized(ControlEvent unused) {
+								// reset background
+								activateShell(shell);
+							}
+							
+							@Override
+							public void controlMoved(ControlEvent unused) {
+								// not needed
+							}
+						});
+						shell.addListener(SWT.Close, unused -> {
+							knownShellHandles.remove(shell);
+							changeBackgroundImage(shell, null);
+						});
+					}
+				}
+			});
+			
+			PlatformUI.getWorkbench().getDisplay().addFilter(SWT.Deactivate, e -> {
+				if(e.widget instanceof Shell shell){
+					deactivateShell(shell);
+				}
+			});
+			
+			reloadBackground();
+		});
 	}
 	
 	private TransparencyMode getBackgroundTransparencyMode() {
@@ -126,37 +160,6 @@ public class SimpleBackgroundPlugin extends Plugin {
 	}
 	
 	public void reloadBackground() {
-		Set<Shell> knownShellHandles = new HashSet<>();
-		PlatformUI.getWorkbench().getDisplay().addFilter(SWT.Activate, e -> {
-			if(e.widget instanceof Shell shell){
-				activateShell(shell);
-				if(knownShellHandles.add(shell)){
-					shell.addControlListener(new ControlListener() {
-						
-						@Override
-						public void controlResized(ControlEvent unused) {
-							// reset background
-							activateShell(shell);
-						}
-						
-						@Override
-						public void controlMoved(ControlEvent unused) {
-							
-						}
-					});
-					shell.addListener(SWT.Close, unused -> {
-						knownShellHandles.remove(shell);
-						changeBackgroundImage(shell, null);
-					});
-				}
-			}
-		});
-		
-		PlatformUI.getWorkbench().getDisplay().addFilter(SWT.Deactivate, e -> {
-			if(e.widget instanceof Shell shell){
-				deactivateShell(shell);
-			}
-		});
 		for(Shell shell : PlatformUI.getWorkbench().getDisplay().getShells()){
 			deactivateShell(shell);
 		}

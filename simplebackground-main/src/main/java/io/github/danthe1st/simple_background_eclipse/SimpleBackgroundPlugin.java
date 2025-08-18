@@ -36,7 +36,7 @@ public class SimpleBackgroundPlugin extends Plugin {
 	private static SimpleBackgroundPlugin instance;
 	
 	private PreferenceStore preferenceStore;
-	private Map<Long, Image> activeBackgroundImages = new HashMap<>();
+	private Map<Shell, Image> activeBackgroundImages = new HashMap<>();
 	
 	public static SimpleBackgroundPlugin getInstance() {
 		synchronized(SimpleBackgroundPlugin.class){
@@ -214,12 +214,12 @@ public class SimpleBackgroundPlugin extends Plugin {
 	}
 	
 	private void changeBackgroundImage(Shell shell, Image newBackgroundImage) {
-		Image oldImage = activeBackgroundImages.get(shell.handle);
+		Image oldImage = activeBackgroundImages.get(shell);
 		if(newBackgroundImage == null){
-			activeBackgroundImages.remove(shell.handle);
+			activeBackgroundImages.remove(shell);
 		}else{
 			shell.setBackgroundImage(newBackgroundImage);
-			activeBackgroundImages.put(shell.handle, newBackgroundImage);
+			activeBackgroundImages.put(shell, newBackgroundImage);
 		}
 		if(oldImage != null){
 			oldImage.dispose();

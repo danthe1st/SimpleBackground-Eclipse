@@ -126,11 +126,11 @@ public class SimpleBackgroundPlugin extends Plugin {
 	}
 	
 	public void reloadBackground() {
-		Set<Long> knownShellHandles = new HashSet<>();
+		Set<Shell> knownShellHandles = new HashSet<>();
 		PlatformUI.getWorkbench().getDisplay().addFilter(SWT.Activate, e -> {
 			if(e.widget instanceof Shell shell){
 				activateShell(shell);
-				if(knownShellHandles.add(shell.handle)){
+				if(knownShellHandles.add(shell)){
 					shell.addControlListener(new ControlListener() {
 						
 						@Override
@@ -145,7 +145,7 @@ public class SimpleBackgroundPlugin extends Plugin {
 						}
 					});
 					shell.addListener(SWT.Close, unused -> {
-						knownShellHandles.remove(shell.handle);
+						knownShellHandles.remove(shell);
 						changeBackgroundImage(shell, null);
 					});
 				}
